@@ -79,8 +79,10 @@ void altura(Tno **n, int * max, int atual){
         if (atual > *max)
             *max=atual;
 //            printf("maximo agora é %d\n", *max);
-        altura(&(*n)->esq, max, atual);
-        altura(&(*n)->dir, max, atual);
+        if ((*n)->esq != NULL)
+            altura(&(*n)->esq, max, atual);
+        if ((*n)->dir != NULL)
+            altura(&(*n)->dir, max, atual);
         atual--;
 //        printf("atual %d\n", atual);
     }
@@ -111,6 +113,16 @@ Tno * busca(Tno ** n, int chave){
 	
 }
 
+void insere_e_imprime(Tno **n, int chave){
+    int alt;
+    insere(n, chave);
+    alt=calcula_altura(n);
+    printf("Altura da arvore = %d\n", alt);
+    imprime_formatado(n, alt);
+    putchar('\n');
+}
+    
+
 
 	
 
@@ -119,15 +131,19 @@ int main (){
 	Tno * arv;
 	Tno * nodo;
     int alt;
-	inicia_arvore(&arv, 10);
-    insere(&arv, 4);
-    insere(&arv, 2);
-    insere(&arv, 14);
-    insere(&arv, 5);
-    insere(&arv, 16);
-    insere(&arv, 12);
-    insere(&arv, 1);
-    insere(&arv, 3);
+	inicia_arvore(&arv, 5);
+    alt = calcula_altura(&arv);
+    printf("Altura da arvore = %d\n", alt);
+    imprime_formatado(&arv, alt);
+    
+    insere_e_imprime(&arv, 9);
+    insere_e_imprime(&arv, 7);
+    insere_e_imprime(&arv, 4);
+    insere_e_imprime(&arv, 12);
+    insere_e_imprime(&arv, 15);
+    insere_e_imprime(&arv, 11);
+
+
 	printf("Impressao em ordem:\n");
 	em_ordem(&arv);
 	putchar('\n');
@@ -137,16 +153,5 @@ int main (){
 	printf("Impressao pre ordem:\n");
 	pre_ordem(&arv);
 	putchar('\n');
-	nodo = busca(&arv, 14);
-	printf("%d\n", nodo->chave);
-	nodo = busca(&arv, 8);
-	if (nodo != NULL){
-		printf("%d\n", nodo->chave);
-	}
-    int max = 0;
-    int atual = 0;
-    alt = calcula_altura(&arv);
-    printf("Altura da arvore = %d\n", alt);
-    imprime_formatado(&arv, alt);
 	return 0;
 }

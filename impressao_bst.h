@@ -32,11 +32,20 @@ void imprime_andar(Tno** n, int i, int altura){
     }
     else if (i == 1)
     {
+        
             print_tab(TAB/2);
-            printf("%d", aux->esq->chave);
+            if (aux->esq != NULL)
+            {
+                printf("%d", aux->esq->chave);
+            }
+            else printf("NIL"); 
 
             print_tab(TAB);
-            printf("%d", aux->dir->chave);
+            if (aux->dir != NULL)
+            {
+                printf("%d", aux->dir->chave);
+            }
+            else printf("NIL");
     }
 
     if (i == 2)
@@ -57,6 +66,11 @@ void imprime_andar(Tno** n, int i, int altura){
             }
             else
                 printf("NIL");
+        }
+        else {
+            printf("NIL");
+            print_tab(TAB/2);
+            printf("NIL");
         }
 
         print_tab(TAB/2);
@@ -82,6 +96,11 @@ void imprime_andar(Tno** n, int i, int altura){
                 printf("NIL");
             }
         }
+        else {
+            printf("NIL");
+            print_tab(TAB/2);
+            printf("NIL");
+        }
     }
     
     if (i == 3)
@@ -101,11 +120,44 @@ void imprime_andar(Tno** n, int i, int altura){
             else
                 printf("NIL");
         }
+        else 
+        {
+            printf("NIL");
+            print_tab(TAB/8);
+            printf("NIL");
+        }
 
         aux=(*n)->esq;
         aux=aux->dir;
+
         print_tab(TAB/4);
         
+        if (aux != NULL)
+        {
+            if(aux->esq != NULL)
+                printf("%d ", aux->esq->chave);
+            else
+                printf("NIL");
+
+            print_tab(TAB/8);
+
+            if(aux->dir != NULL)
+                printf("%d ", aux->dir->chave);
+            else
+                printf("NIL");
+        }
+        else 
+        {
+            printf("NIL");
+            print_tab(TAB/8);
+            printf("NIL");
+        }
+
+        aux=(*n)->dir;
+        aux=aux->esq;
+
+        print_tab(TAB/4);
+
         if (aux != NULL)
         {
             if(aux->esq != NULL)
@@ -118,21 +170,11 @@ void imprime_andar(Tno** n, int i, int altura){
             else
                 printf("NIL");
         }
-
-        aux=(*n)->dir;
-        aux=aux->esq;
-        print_tab(TAB/4);
-        if (aux != NULL)
+        else 
         {
-            if(aux->esq != NULL)
-                printf("%d ", aux->esq->chave);
-            else
-                printf("NIL");
+            printf("NIL");
             print_tab(TAB/8);
-            if(aux->dir != NULL)
-                printf("%d ", aux->dir->chave);
-            else
-                printf("NIL");
+            printf("NIL");
         }
 
         print_tab(TAB/4);
@@ -150,10 +192,13 @@ void imprime_andar(Tno** n, int i, int altura){
             else
                 printf("NIL");
         }
+        else 
+        {
+            printf("NIL");
+            print_tab(TAB/8);
+            printf("NIL");
+        }
      }   
-     
-
-
      printf("\n");
 }
 
