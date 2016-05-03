@@ -1,12 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct tnodo {
-	int chave;
-	struct tnodo * pai;
-	struct tnodo * esq;
-	struct tnodo * dir;
-} Tno;
+#include "impressao_bst.h"
 
 static void inicia_arvore(Tno ** arv, int chave){
 
@@ -77,6 +71,29 @@ static void pre_ordem(Tno ** n){
 	return;
 }
 
+void altura(Tno **n, int * max, int atual){
+    if ((*n) != NULL)
+    {
+        atual++;
+//        printf("atual %d\n", atual);
+        if (atual > *max)
+            *max=atual;
+//            printf("maximo agora é %d\n", *max);
+        altura(&(*n)->esq, max, atual);
+        altura(&(*n)->dir, max, atual);
+        atual--;
+//        printf("atual %d\n", atual);
+    }
+}
+
+int calcula_altura(Tno** n){
+    int max = 0;
+    int atual = 0;
+    altura(n, &max, atual); 
+    return max;
+}
+
+
 Tno * busca(Tno ** n, int chave){
 	if ((*n) == NULL)
 	{
@@ -101,12 +118,16 @@ Tno * busca(Tno ** n, int chave){
 int main (){
 	Tno * arv;
 	Tno * nodo;
+    int alt;
 	inicia_arvore(&arv, 10);
-    insere(&arv, 3);
+    insere(&arv, 4);
     insere(&arv, 2);
     insere(&arv, 14);
     insere(&arv, 5);
     insere(&arv, 16);
+    insere(&arv, 12);
+    insere(&arv, 1);
+    insere(&arv, 3);
 	printf("Impressao em ordem:\n");
 	em_ordem(&arv);
 	putchar('\n');
@@ -122,5 +143,10 @@ int main (){
 	if (nodo != NULL){
 		printf("%d\n", nodo->chave);
 	}
+    int max = 0;
+    int atual = 0;
+    alt = calcula_altura(&arv);
+    printf("Altura da arvore = %d\n", alt);
+    imprime_formatado(&arv, alt);
 	return 0;
 }
