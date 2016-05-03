@@ -113,6 +113,82 @@ Tno * busca(Tno ** n, int chave){
 	
 }
 
+
+Tno * minimo(Tno ** n){
+   if ((*n)->esq == NULL)
+        return (*n);
+   else minimo(&(*n)->esq); 
+}
+
+Tno * maximo(Tno ** n){
+    if ((*n)->dir == NULL)
+        return (*n);
+    else maximo(&(*n)->dir);
+}
+
+Tno * sucessor(Tno * n){
+    Tno * aux;
+    if (n->dir != NULL)
+        return (minimo(&n->dir));
+    aux=n->pai; 
+    while (aux != NULL && n == aux->dir){
+        n=aux;
+        aux=aux->pai;
+    }
+    return aux;
+}
+
+
+Tno * antecessor(Tno * n){
+    Tno * aux;
+    if (n->esq != NULL)
+        return maximo(&n->esq);
+    aux = n->pai;
+    while (aux != NULL && n == aux->esq){
+        n = aux;
+        aux = aux->pai;
+    }
+    return aux;
+}
+
+Tno * remove(Tno ** n){
+    if ((*n)->dir == NULL && (*n)->esq == NULL) // nenhum filho
+    {
+        if (n->pai->esq = (*n))
+            n->pai->esq = NULL;
+        else
+            n->pai->dir = NULL;
+        free(*n);
+        return;
+    }
+    if (*n->esq == NULL && (*n)->dir != NULL) // filho à direita
+    {
+        *n->chave=*n->dir->chave;
+        free(*n->dir);
+        *n->dir = NULL;
+    }
+    if (*n-> dir == NULL && (*n)->esq != NULL) // filho à esquerda
+    {
+        *n->chave=*n->esq->chave;
+        free(*n->esq);
+        *n->esq = NULL;
+    }
+    if (*n->dir != NULL && (*n)->esq != NULL) // quarto caso, dois filhos
+    {
+        Tno * aux;
+        if (*n->dir->esq == NULL)
+        {
+            
+            
+            
+            
+            
+        
+
+    
+    
+    
+    
 void insere_e_imprime(Tno **n, int chave){
     int alt;
     insere(n, chave);
@@ -121,8 +197,6 @@ void insere_e_imprime(Tno **n, int chave){
     imprime_formatado(n, alt);
     putchar('\n');
 }
-    
-
 
 	
 
@@ -153,5 +227,19 @@ int main (){
 	printf("Impressao pre ordem:\n");
 	pre_ordem(&arv);
 	putchar('\n');
+    nodo = minimo(&arv);
+    printf("Minimo: %d\n", nodo->chave);
+    nodo = maximo(&arv);
+    printf("Maximo: %d\n", nodo->chave);
+    nodo = sucessor(arv);
+    while (nodo != NULL){
+        printf("Sucessor: %d\n", nodo->chave);
+        nodo = sucessor(nodo);
+    } 
+    nodo = antecessor(arv);
+    while (nodo != NULL){
+        printf("Antecessor: %d\n", nodo->chave);
+        nodo = antecessor(nodo);
+    } 
 	return 0;
 }
